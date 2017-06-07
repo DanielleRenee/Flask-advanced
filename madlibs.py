@@ -41,35 +41,42 @@ def greet_person():
                            person=player,
                            compliment=compliment)
 
+
+
+@app.route('/game')
+def game():
+    """Ask user if they want to play a game."""
+
     wants_game = request.args.get("yesno")
 
-    if wants_game:
+    if wants_game == "yes":
         return render_template("game.html")
     else:
         return render_template("goodbye.html")
 
-@app.route('/game')
-def game():
-    """Greet user with compliment."""
-
-    game_response = request.args.get("yesno")
-
-    return render_template("game.html")
-
 @app.route('/madlib')
 def madlib():
-    """Greet user with compliment."""
+    """Creates a madlib for the user, per their inputs."""
 
     color = request.args.get("color")
     noun = request.args.get("noun")
     adjective = request.args.get("adjective")
     name = request.args.get("name")
+    time = request.args.get("time")
 
     return render_template("madlibs.html",
-                            name=person,
+                            person=name,
                             noun=noun,
                             adjective=adjective,
-                            color=color)
+                            color=color,
+                            time=time)
+
+@app.route('/goodbye')
+def say_goodbye():
+    """Say goodbye to user."""
+
+    return render_template("goodbye.html")
+
 
 
 if __name__ == '__main__':
